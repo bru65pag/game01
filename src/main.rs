@@ -35,8 +35,10 @@ fn main() {
                 sdl2::event::Event::Window { timestamp: _, window_id: _, win_event } => {
                     match win_event {
                         sdl2::event::WindowEvent::SizeChanged(_x,_y) => {
-                            canvas.set_draw_color(Color::RGB(255, 255, 0));
-                            canvas.fill_rect(None).unwrap();
+                            // canvas.set_draw_color(Color::RGB(255,0,255));
+                            // canvas.fill_rect(Rect::new(0,0,50,50)).unwrap();
+                            //canvas.fill_rect(None).unwrap(); // rect matches canvas size
+                            canvas.clear();
                             canvas.present();
                         }
                         _ => {}
