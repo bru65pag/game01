@@ -1,7 +1,7 @@
 pub mod game {
 
     extern crate sdl2;
-    extern crate sdl2_sys;
+    //extern crate sdl2_sys;
 
     use sdl2::pixels::Color;
     use sdl2::event::Event;
