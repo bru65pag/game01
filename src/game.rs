@@ -9,7 +9,7 @@ pub mod game {
     use sdl2::rect::Point;
     use sdl2::render::Canvas;
     use std::time::Duration;
-
+ 
     struct FPS {
         frame_count:u64,
         timer_fps:u64,
@@ -31,6 +31,7 @@ pub mod game {
         title: String,
         sdl: sdl2::Sdl,
         canvas: Canvas<sdl2::video::Window>,
+        frame_per_second:u64,
         fps: FPS,
         timer: sdl2::TimerSubsystem,
         running: bool,
@@ -42,7 +43,7 @@ pub mod game {
             println!("Game title is {}", self.title);
         }
 
-        pub fn new(title: String) -> Game {
+        pub fn new(title:String, frame_per_second:u64) -> Game {
 
             let window_size = WindowSize {height: 400, width: 400};
             let window_location = WindowLocation {x:320, y: 300};
@@ -62,6 +63,7 @@ pub mod game {
                 title: title,
                 sdl: sdl,
                 canvas: canvas,
+                frame_per_second: frame_per_second,
                 fps : FPS {
                     frame_count: 0,
                     timer_fps: 0,
@@ -94,8 +96,8 @@ pub mod game {
 
             self.fps.frame_count += 1;
             self.fps.last_frame = self.timer.performance_counter() - self.fps.last_frame;
-            if self.fps.timer_fps<(1000/60) {
-                std::thread::sleep(Duration::from_millis((1000/60)-self.fps.timer_fps));
+            if self.fps.timer_fps<(1000/self.frame_per_second) {
+                std::thread::sleep(Duration::from_millis((1000/self.frame_per_second)-self.fps.timer_fps));
             }
             self.canvas.present();
         }
